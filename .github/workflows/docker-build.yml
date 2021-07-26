@@ -25,4 +25,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: em108/docker:ubuntu
+          tags: fr108nk/docker:ubuntu
