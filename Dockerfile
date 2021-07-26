@@ -17,7 +17,7 @@ RUN set -ex \
     # Setup MirrorBot dependencies
     && curl -fsSL https://github.com/jaskaranSM/megasdkrest/releases/download/v0.1/megasdkrest -o /usr/local/bin/megasdkrest \
     && chmod +x /usr/local/bin/megasdkrest \
-    && curl -fsSLO https://raw.githubusercontent.com/KenHV/Mirror-Bot/staging/requirements.txt \
+    && curl -fsSLO https://raw.githubusercontent.com/em108/python-aria-mirror-bot/master/requirements.txt \
     && pip3 install --no-cache-dir -r requirements.txt \
     && rm requirements.txt \
     # Cleanup environment
