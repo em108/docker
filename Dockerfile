@@ -1,23 +1,19 @@
 FROM ubuntu:20.04
 
-RUN set -ex \
-    # Setup environment
-    && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -qq update \
-    && apt-get -qq -y dist-upgrade \
-    && apt-get -qq -y install --no-install-recommends \
-        locales python3 python3-lxml python3-pip \
-        # MegaSDK-REST dependencies
-        libc-ares-dev libcrypto++-dev libcurl4-openssl-dev \
-        libmagic-dev libsodium-dev libsqlite3-dev libssl-dev \
-        # MirrorBot dependencies
-        aria2 curl ffmpeg jq p7zip-full p7zip-rar pv \
-    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
-    && locale-gen \
-    # Setup MirrorBot dependencies
-    && curl -fsSL https://github.com/jaskaranSM/megasdkrest/releases/download/v0.1/megasdkrest -o /usr/local/bin/megasdkrest \
-    && chmod +x /usr/local/bin/megasdkrest \
-    && curl -fsSLO https://raw.githubusercontent.com/em108/python-aria-mirror-bot/master/requirements.txt \
+WORKDIR /usr/src/app
+RUN chmod 777 /usr/src/app
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y tzdata aria2 git python3 python3-pip \
+    locales python3-lxml \
+    curl pv jq ffmpeg \
+    p7zip-full p7zip-rar \
+    libcrypto++-dev libssl-dev \
+    libc-ares-dev libcurl4-openssl-dev \
+    libsqlite3-dev libsodium-dev && \
+    curl -L https://github.com/jaskaranSM/megasdkrest/releases/download/v0.1/megasdkrest -o /usr/local/bin/megasdkrest && \
+    chmod +x /usr/local/bin/megasdkrest
+    
+RUN curl -fsSLO https://raw.githubusercontent.com/em108/python-aria-mirror-bot/master/requirements.txt \
     && pip3 install --no-cache-dir -r requirements.txt \
     && rm requirements.txt \
     # Cleanup environment
